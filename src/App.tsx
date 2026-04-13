@@ -49,7 +49,7 @@ const Card = ({ children, className, title }: any) => (
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'map' | 'ai' | 'settings'>('map');
-  const [config, setConfig] = useState<AppConfig>({ qwenApiKey: '', qwenModel: 'qwen-plus' });
+  const [config, setConfig] = useState<AppConfig>({ qwenApiKey: '', qwenModel: 'qwen3.5-flash' });
   const [data, setData] = useState<AppData>({ lastUpdated: '', techPoints: [] });
   const [isFsReady, setIsFsReady] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -383,16 +383,33 @@ export default function App() {
                     <p className="text-[10px] text-hw-text-secondary mt-2">API Key 仅保存在本地，不会上传到任何服务器。</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-bold mb-2">模型选择</label>
-                    <select 
-                      className="w-full hw-input appearance-none"
-                      value={config.qwenModel}
-                      onChange={(e) => setConfig({ ...config, qwenModel: e.target.value })}
-                    >
-                      <option value="qwen-plus">Qwen Plus (推荐)</option>
-                      <option value="qwen-max">Qwen Max (最强)</option>
-                      <option value="qwen-turbo">Qwen Turbo (极速)</option>
-                    </select>
+                    <label className="block text-sm font-bold mb-2">模型名称</label>
+                    <div className="space-y-3">
+                      <input 
+                        type="text" 
+                        className="w-full hw-input" 
+                        placeholder="例如: qwen-plus" 
+                        value={config.qwenModel}
+                        onChange={(e) => setConfig({ ...config, qwenModel: e.target.value })}
+                      />
+                      <div className="flex flex-wrap gap-2">
+                        {['qwen3.6-plus', 'qwen3.5-flash'].map(m => (
+                          <button
+                            key={m}
+                            onClick={() => setConfig({ ...config, qwenModel: m })}
+                            className={cn(
+                              "px-3 py-1 rounded-full text-[10px] font-bold transition-all border",
+                              config.qwenModel === m 
+                                ? "bg-hw-blue text-white border-hw-blue" 
+                                : "bg-black/5 text-hw-text-secondary border-transparent hover:border-hw-blue/30"
+                            )}
+                          >
+                            {m}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-hw-text-secondary mt-2">支持手动输入阿里 DashScope 官方模型 ID。</p>
                   </div>
                   <button 
                     onClick={() => {
