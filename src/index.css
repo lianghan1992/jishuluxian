@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "HarmonyOS Sans", system-ui, sans-serif;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  
+  --color-hw-blue: #007DFF;
+  --color-hw-bg: #F1F3F5;
+  --color-hw-card: #FFFFFF;
+  --color-hw-text: #1A1A1A;
+  --color-hw-text-secondary: #666666;
+}
+
+@layer base {
+  body {
+    @apply bg-hw-bg text-hw-text font-sans antialiased;
+  }
+}
+
+@layer components {
+  .hw-card {
+    @apply bg-hw-card rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-white/50 backdrop-blur-sm;
+  }
+  
+  .hw-button-primary {
+    @apply bg-hw-blue text-white px-6 py-2.5 rounded-full font-medium transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .hw-button-secondary {
+    @apply bg-black/5 text-hw-text px-6 py-2.5 rounded-full font-medium transition-all hover:bg-black/10 active:scale-95;
+  }
+  
+  .hw-input {
+    @apply bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-hw-blue outline-none transition-all;
+  }
+}
